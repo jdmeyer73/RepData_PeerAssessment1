@@ -114,7 +114,7 @@ Over the 61 days, the time interval that had the highest average number of steps
 
 *Calculate and report the total number of missing values*
 
-``` {r missing values}
+``` {r missing_values}
 # Calculate number of missing values
 num_miss <- sum(is.na(activity$steps))
 perc_miss <- sprintf((num_miss/nrow(activity))*100, fmt="%#.2f")
@@ -125,7 +125,7 @@ The number of missing values is `r num_miss`, which represents `r perc_miss`% of
 
 *Devise a strategy for filling in all of the missing values*
 
-``` {r imputation strategy}
+``` {r imputation_strategy}
 # Impute missing values based on mean of day week and 5-minute interval combo
 ## Add 'wday' and 'interval' combo to activity dataframe
 activity$wday_int <- paste(wday(activity$datetime),":",activity$interval)
@@ -143,7 +143,7 @@ As mentioned above, the missing values will be replaced with the average steps t
 
 *Create a new dataset that is equal to the original but with missing data filled in*
 
-``` {r imputation dataframe}
+``` {r imputation_dataframe}
 ## Create new data frame and replace 'NA' with 'avgsteps' and remove 'avgsteps'
 actImp <- left_join(activity, actImp, by = "wday_int")
 actImp$steps <- ifelse(is.na(actImp$steps), actImp$avgsteps, actImp$steps)
@@ -161,7 +161,7 @@ To impute the new values, the `activity` dataframe is joined with the average st
 
 To make the comparisons between the imputed data and the original data easier, a combined dataframe is created with a factor for `datatype`, which takes on values of Imputed and Raw. Then a histogram is created with separate panels for each dataset.
 
-``` {r combined dataframe and histogram}
+``` {r combined_df_histogram}
 ## Create combined dataframe for side-by-side histogram comparison
 activity$datatype <- "Raw Data"
 actImp$datatype <- "Imputed Data"
@@ -183,7 +183,7 @@ ggplot(data=(combDF %>%
 Imputing values for missing data made the distribution appear somewhat more normal, if not still a little bimodal. Importantly, the number of days with 0 steps decreased from 10 to 2.
 
 
-``` {r compare mean median}
+``` {r compare_mean_median}
 # Calculate mean and median average daily total steps of imputed data
 
 daymeanImp <- sprintf(actImp %>% 
@@ -216,14 +216,14 @@ The result of imputing data for missing values is clearly seen in the comparison
 ### 8. Panel plot comparing the average number of steps taken per 5-minute interval across weekdays and weekends
 
 *Create new factor variable for weekend vs. weekday*
-``` {r weekday vs weekend}
+``` {r weekday_v_weekend}
 actImp$wkdayend <- 
       as.factor(ifelse(wday(actImp$datetime)==1 | wday(actImp$datetime)==7, 
                        "Weekend", "Weekday"))
 ```
 
 *Create panel time series plot for weekend vs. weekday*
-``` {r panel time series plot}
+``` {r panel_ts_plot}
 library(lattice)
 xyplot(avgsteps~interval|factor(wkdayend), 
        layout=(c(1,2)), type="l", xlab="Number of Steps", ylab="Interval", 

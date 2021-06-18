@@ -206,7 +206,7 @@ ggplot(data=(combDF %>%
       scale_y_continuous(breaks = seq(0,12,by=2),"Frequency")
 ```
 
-![](PA1_template_files/figure-html/combined dataframe and histogram-1.png)<!-- -->
+![](PA1_template_files/figure-html/combined_df_histogram-1.png)<!-- -->
 
 Imputing values for missing data made the distribution appear somewhat more normal, if not still a little bimodal. Importantly, the number of days with 0 steps decreased from 10 to 2.
 
@@ -272,6 +272,6 @@ xyplot(avgsteps~interval|factor(wkdayend),
                    summarize(avgsteps = mean(steps, na.rm=TRUE))))
 ```
 
-![](PA1_template_files/figure-html/panel time series plot-1.png)<!-- -->
+![](PA1_template_files/figure-html/panel_ts_plot-1.png)<!-- -->
 
 Comparing the average steps per interval across the weekend and weekdays shows two main differences.  First, weekdays have a higher initial peak that dwarfs the other peaks throughout the day. The peaks for weekends, on the other hand, are not as varied through out the day.  Second, the steps per interval do not increase as early on the weekends (after about 8:00 am), while on the weekdays, the steps per interval increase quickly shortly after 5:00 am.

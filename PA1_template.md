@@ -23,6 +23,7 @@ activity <- read.csv(unz("activity.zip", "activity.csv"),
 ```r
 library(lubridate)
 library(dplyr)
+options(dplyr.summarise.inform = FALSE)
 activity <- activity %>% 
             mutate(datetime = parse_date_time(paste(date,
                             paste(substr(sprintf("%04d",activity$interval),1,2),
@@ -205,10 +206,6 @@ ggplot(data=(combDF %>%
       scale_y_continuous(breaks = seq(0,12,by=2),"Frequency")
 ```
 
-```
-## `summarise()` has grouped output by 'date'. You can override using the `.groups` argument.
-```
-
 ![](PA1_template_files/figure-html/combined dataframe and histogram-1.png)<!-- -->
 
 Imputing values for missing data made the distribution appear somewhat more normal, if not still a little bimodal. Importantly, the number of days with 0 steps decreased from 10 to 2.
@@ -273,10 +270,6 @@ xyplot(avgsteps~interval|factor(wkdayend),
        data=(actImp %>% 
                    group_by(interval, wkdayend) %>% 
                    summarize(avgsteps = mean(steps, na.rm=TRUE))))
-```
-
-```
-## `summarise()` has grouped output by 'interval'. You can override using the `.groups` argument.
 ```
 
 ![](PA1_template_files/figure-html/panel time series plot-1.png)<!-- -->

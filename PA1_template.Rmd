@@ -21,6 +21,7 @@ activity <- read.csv(unz("activity.zip", "activity.csv"),
 ``` {r datetime, message=FALSE}
 library(lubridate)
 library(dplyr)
+options(dplyr.summarise.inform = FALSE)
 activity <- activity %>% 
             mutate(datetime = parse_date_time(paste(date,
                             paste(substr(sprintf("%04d",activity$interval),1,2),
